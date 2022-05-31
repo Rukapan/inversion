@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7eaf2f695da415ae5ecbc3e966c1095e",
+    "content-hash": "1abc7822bd9f28e9a62986817bf04f76",
     "packages": [
         {
             "name": "brick/math",
@@ -371,16 +371,16 @@
         },
         {
             "name": "egulias/email-validator",
-            "version": "3.1.2",
+            "version": "3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/egulias/EmailValidator.git",
-                "reference": "ee0db30118f661fb166bcffbf5d82032df484697"
+                "reference": "a5ed8d58ed0c340a7c2109f587951b1c84cf6286"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/ee0db30118f661fb166bcffbf5d82032df484697",
-                "reference": "ee0db30118f661fb166bcffbf5d82032df484697",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/a5ed8d58ed0c340a7c2109f587951b1c84cf6286",
+                "reference": "a5ed8d58ed0c340a7c2109f587951b1c84cf6286",
                 "shasum": ""
             },
             "require": {
@@ -427,7 +427,7 @@
             ],
             "support": {
                 "issues": "https://github.com/egulias/EmailValidator/issues",
-                "source": "https://github.com/egulias/EmailValidator/tree/3.1.2"
+                "source": "https://github.com/egulias/EmailValidator/tree/3.2"
             },
             "funding": [
                 {
@@ -435,7 +435,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-10-11T09:18:27+00:00"
+            "time": "2022-05-28T22:19:18+00:00"
         },
         {
             "name": "fruitcake/php-cors",
@@ -507,66 +507,6 @@
                 }
             ],
             "time": "2022-02-20T15:07:15+00:00"
-        },
-        {
-            "name": "goldspecdigital/laravel-eloquent-uuid",
-            "version": "v9.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/goldspecdigital/laravel-eloquent-uuid.git",
-                "reference": "315fe568de2fa520226740f76c774aa0ae80f292"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/goldspecdigital/laravel-eloquent-uuid/zipball/315fe568de2fa520226740f76c774aa0ae80f292",
-                "reference": "315fe568de2fa520226740f76c774aa0ae80f292",
-                "shasum": ""
-            },
-            "require": {
-                "laravel/framework": "^9.0",
-                "php": "^8.0"
-            },
-            "require-dev": {
-                "ext-pdo": "*",
-                "orchestra/testbench": "^7.0",
-                "phpunit/phpunit": "^9.5.10"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "GoldSpecDigital\\LaravelEloquentUUID\\UuidServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "GoldSpecDigital\\LaravelEloquentUUID\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Matthew Inamdar",
-                    "email": "matt@goldspecdigital.com"
-                }
-            ],
-            "description": "A simple drop-in solution for providing UUID support for the IDs of your Eloquent models.",
-            "homepage": "https://github.com/goldspecdigital/laravel-eloquent-uuid",
-            "keywords": [
-                "eloquent",
-                "laravel",
-                "php",
-                "uuid"
-            ],
-            "support": {
-                "issues": "https://github.com/goldspecdigital/laravel-eloquent-uuid/issues",
-                "source": "https://github.com/goldspecdigital/laravel-eloquent-uuid/tree/v9.0.0"
-            },
-            "time": "2022-02-09T14:36:29+00:00"
         },
         {
             "name": "graham-campbell/result-type",
@@ -955,16 +895,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v9.14.1",
+            "version": "v9.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "2ca86f96118635a79ee3389013ccab110ae14bea"
+                "reference": "dc32641f5963578858fb71a9d2fbf995fe1e1ea3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/2ca86f96118635a79ee3389013ccab110ae14bea",
-                "reference": "2ca86f96118635a79ee3389013ccab110ae14bea",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/dc32641f5963578858fb71a9d2fbf995fe1e1ea3",
+                "reference": "dc32641f5963578858fb71a9d2fbf995fe1e1ea3",
                 "shasum": ""
             },
             "require": {
@@ -1130,7 +1070,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-05-25T18:18:07+00:00"
+            "time": "2022-05-31T14:56:46+00:00"
         },
         {
             "name": "laravel/sanctum",
@@ -5460,16 +5400,16 @@
         },
         {
             "name": "laravel/sail",
-            "version": "v1.14.7",
+            "version": "v1.14.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sail.git",
-                "reference": "c049316f9bcb02598607307f18b514b66202b639"
+                "reference": "04b425968c6a76940bddd2cfa40bf9e9ce78eee8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sail/zipball/c049316f9bcb02598607307f18b514b66202b639",
-                "reference": "c049316f9bcb02598607307f18b514b66202b639",
+                "url": "https://api.github.com/repos/laravel/sail/zipball/04b425968c6a76940bddd2cfa40bf9e9ce78eee8",
+                "reference": "04b425968c6a76940bddd2cfa40bf9e9ce78eee8",
                 "shasum": ""
             },
             "require": {
@@ -5516,7 +5456,7 @@
                 "issues": "https://github.com/laravel/sail/issues",
                 "source": "https://github.com/laravel/sail"
             },
-            "time": "2022-05-21T17:14:14+00:00"
+            "time": "2022-05-31T14:48:21+00:00"
         },
         {
             "name": "mockery/mockery",
