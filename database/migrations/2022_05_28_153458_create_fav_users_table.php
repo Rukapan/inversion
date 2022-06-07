@@ -15,6 +15,8 @@ class CreateFavUsersTable extends Migration
     {
         Schema::create('fav_users', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid', 36);
+            $table->string('user_id', 36);
             $table->timestamps();
         });
     }

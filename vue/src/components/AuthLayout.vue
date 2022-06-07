@@ -1,12 +1,12 @@
 <template>
-  <div class="w-screen h-screen bg-cover flex justify-center text-black"
-    style="background-image: url(/public/images/inversion-shot.png)">
+  <div class="w-screen h-screen flex justify-center text-black">
+    <img class="-z-10" src="/public/img/inversion-shot.png">
     <div
       class="fixed top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-max h-max flex justify-center items-center rounded-2xl shadow-2xl border backdrop-brightness-150 backdrop-blur-3xl">
       <div class="h-max w-max flex items-center justify-center p-4 sm:p-6 lg:px-8">
         <div class="max-w-md w-full">
           <div class="flex justify-center items-center">
-            <img class="h-7 w-7 sm:h-10 sm:w-10" src="/public/images/inversion-logo.png" />
+            <img class="h-7 w-7 sm:h-10 sm:w-10" src="/public/img/inversion-logo.png" />
           </div>
           <router-view></router-view>
           <div class="flex justify-center mt-6">

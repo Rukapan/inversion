@@ -18,8 +18,9 @@
         <div @click="showProfile"
           class="w-max h-max text-black backdrop-brightness-200 bg-white/50 rounded-xl border shadow-2xl px-1 normal-case flex justify-center items-center cursor-pointer hover:bg-black/10 hover:border-black/10 transition duration-300">
           <div class="flex justify-center items-end">
-            <img :src="[photo.user.image ? photo.user.image : '/public/images/user-icon.png']"
+            <img v-if="photo.user.image" :src="photo.user.image"
               class="w-7 h-7 rounded-full mb-1">
+              <UserCircleIcon v-else class="w-7 h-7 rounded-full mb-1"></UserCircleIcon>
             <p class="ml-1 text-2xl font-bold mb-0.5">{{ photo.user.name }}</p>
           </div>
           <div class="ml-1 flex justify-center items-center">
@@ -44,8 +45,9 @@
             <div @click="showProfile"
               class="w-max h-max text-black backdrop-brightness-200 bg-white/50 rounded-xl border shadow-2xl px-1 normal-case flex justify-center items-center cursor-pointer hover:bg-black/10 hover:border-black/10 transition duration-300">
               <div class="flex justify-center items-center">
-                <img :src="[photo.user.image ? photo.user.image : '/public/images/user-icon.png']"
+                <img v-if="photo.user.image" :src="photo.user.image"
                   class="w-10 h-10 py-[1px] px-[1px] rounded-full">
+                  <UserCircleIcon v-else class="w-10 h-10 py-[1px] px-[1px] rounded-full"></UserCircleIcon>
                 <p class="ml-1 text-3xl font-bold">{{ photo.user.name }}</p>
               </div>
               <div class="ml-1 flex justify-center items-center">
@@ -69,7 +71,7 @@
 </template>
 
 <script setup>
-import { XCircleIcon, ClockIcon, LocationMarkerIcon, } from '@heroicons/vue/outline';
+import { XCircleIcon, ClockIcon, LocationMarkerIcon, UserCircleIcon } from '@heroicons/vue/outline';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import store from '../store';

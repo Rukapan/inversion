@@ -8,8 +8,11 @@
     <div class="relative flex justify-center w-full">
       <div @click="changeImage" class="group rounded-full tooltip tooltip-right tooltip-info" data-tip="Change Icon">
         <input type="file" ref="inputFile" class="hidden" @change="compressImage">
-        <img :src="[profile.image ? profile.image : '/public/images/user-icon.png']"
+        <img v-if="profile.image" :src="profile.image"
           class="h-[15rem] w-[15rem] rounded-full group-hover:brightness-75 border border-white group-hover:border-black cursor-pointer transition duration-300">
+          <div v-else class="flex justify-center items-center h-[15rem] w-[15rem] rounded-full group-hover:brightness-75 border border-white group-hover:border-black cursor-pointer transition duration-300">
+            <UserCircleIcon class="h-[13rem] w-[13rem] group-hover:brightness-75"></UserCircleIcon>
+          </div>
         <svg
           class="absolute invisible group-hover:animate-show text-white cursor-pointer top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2"
           style="width:70px;height:70px" viewBox="0 0 24 24">
@@ -80,7 +83,7 @@
 </template>
 
 <script setup>
-import { XCircleIcon, UserIcon, ClockIcon, LocationMarkerIcon, PencilIcon, SaveIcon } from '@heroicons/vue/outline';
+import { XCircleIcon, UserIcon, ClockIcon, LocationMarkerIcon, PencilIcon, SaveIcon, UserCircleIcon } from '@heroicons/vue/outline';
 import { ref } from "vue";
 import { useRouter } from 'vue-router';
 import { VueScrollPicker } from "vue-scroll-picker"

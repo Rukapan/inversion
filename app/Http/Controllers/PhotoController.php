@@ -9,6 +9,7 @@ use App\Http\Requests\UpdatePhotoRequest;
 use App\Http\Requests\StorePhotoRequest;
 use App\Http\Resources\PhotoResource;
 use App\Http\Resources\LastPostResource;
+use App\Models\FavPhoto;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
@@ -25,8 +26,6 @@ class PhotoController extends Controller
      */
     public function index()
     {
-        $user = $this->request->user();
-
         return PhotoResource::collection(Photo::orderBy('updated_at', 'DESC')->paginate(20));
     }
 
@@ -38,6 +37,24 @@ class PhotoController extends Controller
     public function indexUserAlbum($uuid)
     {
         return PhotoResource::collection(Photo::where('uuid', $uuid)->orderBy('updated_at', 'DESC')->get());
+    }
+
+    /**
+     * @param  Request  $request
+     * @return Response
+     */
+    public function indexFavPhotos()
+    {
+        $user = $this->request->user();
+
+        $favPhotos = FavPhoto::where('uuid', $user->uuid)->orderBy('updated_at', 'DESC')->get();
+
+        $photo_ids = array();
+        foreach ($favPhotos as $favPhoto) {
+            $photo_ids[] = $favPhoto->photo_id;
+        }
+
+        return PhotoResource::collection(Photo::whereIn('id', $photo_ids)->paginate(12));
     }
 
     /**

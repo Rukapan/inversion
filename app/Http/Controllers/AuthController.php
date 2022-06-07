@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\LastPostResource;
 use App\Http\Resources\ProfileResource;
+use App\Http\Resources\FavPhotoResource;
+use App\Http\Resources\FavUserResource;
+use App\Models\FavPhoto;
+use App\Models\FavUser;
 use App\Models\Profile;
 use App\Models\LastPost;
 use App\Models\Photo;
@@ -74,6 +78,8 @@ class AuthController extends Controller
             'user' => $user,
             'profile' => new ProfileResource(Profile::where('uuid', $user['uuid'])->first()),
             'lastPost' => new LastPostResource(LastPost::where('uuid', $user['uuid'])->first()),
+            'favPhotos' => FavPhotoResource::collection(FavPhoto::where('uuid', $user['uuid'])->orderBy('updated_at', 'DESC')->get()),
+            'favUsers' => FavUserResource::collection(FavUser::where('uuid', $user['uuid'])->orderBy('updated_at', 'DESC')->get()),
             'token' => $token
         ]);
     }
@@ -106,7 +112,7 @@ class AuthController extends Controller
 
         $photos = Photo::where('uuid', $user->uuid)->get();
 
-        foreach($photos as $photo) {
+        foreach ($photos as $photo) {
             $absolutePath = public_path($photo->image);
             File::delete($absolutePath);
             $photo->delete();

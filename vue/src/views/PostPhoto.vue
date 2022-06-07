@@ -135,7 +135,7 @@ function postPhoto(ev) {
       store.commit("setNotification", {
         error: false,
         message: "Your photo has been uploaded."
-      })
+      });
       loading.value = false;
       rePost.value = false;
       photo.value.title = "";

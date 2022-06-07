@@ -6,8 +6,8 @@
       <XCircleIcon class="h-7 w-7"></XCircleIcon>
     </router-link>
     <div class="flex justify-center w-full">
-      <img :src="[profile.image ? profile.image : '/public/images/user-icon.png']"
-        class="h-[15rem] w-[15rem] border border-white rounded-full">
+      <img v-if="profile.image" :src="profile.image" class="h-[15rem] w-[15rem] border border-white rounded-full">
+      <UserCircleIcon v-else class="h-[15rem] w-[15rem] border border-white rounded-full"></UserCircleIcon>
     </div>
     <div class="mt-3 flex justify-center w-full">
       <div class="space-y-1">
@@ -53,13 +53,20 @@
         class="btn btn-primary text-white hover:text-white/70 normal-case text-lg">
         <PhotographIcon class="w-8 h-8 mr-1"></PhotographIcon> Album
       </router-link>
+      <button v-if="!favUsers.get(profile.uuid)" @click="postFavUser"
+        class="btn btn-info normal-case text-lg flex justify-center items-center">
+        <UserAddIcon class="w-7 h-7"></UserAddIcon> Follow
+      </button>
+      <button v-else @click="deleteFavUser" class="btn btn-info normal-case text-lg flex justify-center items-center">
+        <UserRemoveIcon class="w-7 h-7"></UserRemoveIcon> UnFollow
+      </button>
     </div>
   </div>
   <router-view class="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-10"></router-view>
 </template>
 
 <script setup>
-import { ClockIcon, LocationMarkerIcon, XCircleIcon, PencilAltIcon, PhotographIcon, MenuIcon, LogoutIcon, TrashIcon } from '@heroicons/vue/outline';
+import { ClockIcon, LocationMarkerIcon, XCircleIcon, PencilAltIcon, PhotographIcon, MenuIcon, LogoutIcon, TrashIcon, UserCircleIcon, UserAddIcon, UserRemoveIcon } from '@heroicons/vue/outline';
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import store from '../store';
@@ -68,11 +75,15 @@ const route = useRoute();
 let otherUser = false;
 let profile;
 if (route.params.name) {
-  otherUser = true;
   profile = route.params;
+  if (profile.uuid !== store.state.user.data.uuid) {
+    otherUser = true;
+  }
 } else {
   profile = computed(() => store.state.user.profile);
 }
+
+const favUsers = computed(() => store.state.user.favUsers);
 
 const router = useRouter();
 
@@ -80,6 +91,36 @@ function logout() {
   store.dispatch("logout").then(() => {
     router.push({
       name: "Login"
+    })
+  })
+}
+
+function postFavUser() {
+  store.dispatch("postFavUser", {
+    user_id: profile.uuid
+  }).then(() => {
+    store.commit("setNotification", {
+      error: false,
+      message: `Followed ${profile.name}`
+    })
+  }).catch(() => {
+    store.commit("setNotification", {
+      error: true,
+      message: "Failed to fallow up."
+    })
+  })
+}
+
+function deleteFavUser() {
+  store.dispatch("deleteFavUser", favUsers.value.get(profile.uuid)).then(() => {
+    store.commit("setNotification", {
+      error: false,
+      message: `Unfollowed ${profile.name}`
+    })
+  }).catch(() => {
+    store.commit("setNotification", {
+      error: true,
+      message: "Failed to unfollowed"
     })
   })
 }

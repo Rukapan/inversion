@@ -12,6 +12,8 @@ import Album from "../views/Album.vue";
 import Photo from "../views/Photo.vue";
 import ProfileEditor from "../views/ProfileEditor.vue";
 import DeleteAccount from "../components/DeleteAccount.vue";
+import FavUsers from "../views/FavUsers.vue";
+import FavPhotos from "../views/FavPhotos.vue";
 
 const routes = [
   {
@@ -34,8 +36,8 @@ const routes = [
             path: "/profile/deleteAccount",
             component: DeleteAccount,
             name: "DeleteAccount",
-          }
-        ]
+          },
+        ],
       },
       {
         path: `/profile/:name`,
@@ -66,6 +68,16 @@ const routes = [
         path: `/photo/:title`,
         component: Photo,
         name: "Photo",
+      },
+      {
+        path: "/favUsers",
+        component: FavUsers,
+        name: "FavUsers",
+      },
+      {
+        path: "/favPhotos",
+        component: FavPhotos,
+        name: "FavPhotos",
       },
     ],
   },

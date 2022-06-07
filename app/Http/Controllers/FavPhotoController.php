@@ -2,21 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\FavPhotoResource;
 use App\Models\FavPhoto;
 use Illuminate\Http\Request;
 
 class FavPhotoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -25,29 +16,12 @@ class FavPhotoController extends Controller
      */
     public function store(Request $request)
     {
-    }
+        FavPhoto::create([
+            'uuid' => $request->uuid,
+            'photo_id' => $request->photo_id
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\FavPhoto  $favPhoto
-     * @return \Illuminate\Http\Response
-     */
-    public function show(FavPhoto $favPhoto)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\FavPhoto  $favPhoto
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, FavPhoto $favPhoto)
-    {
-        //
+        return FavPhotoResource::collection(FavPhoto::where('uuid', $request->uuid)->orderBy('updated_at', 'DESC')->get());
     }
 
     /**
@@ -58,6 +32,8 @@ class FavPhotoController extends Controller
      */
     public function destroy(FavPhoto $favPhoto)
     {
-        //
+        $favPhoto->delete();
+
+        return FavPhotoResource::collection(FavPhoto::where('uuid', $favPhoto->uuid)->orderBy('updated_at', 'DESC')->get());
     }
 }

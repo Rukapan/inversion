@@ -25,6 +25,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('/profile', \App\Http\Controllers\ProfileController::class);
     Route::get('/profile/edit', [\App\Http\Controllers\ProfileController::class, 'update']);
     Route::resource('/photo', \App\Http\Controllers\PhotoController::class);
+    Route::get('/getFavPhotos', [\App\Http\Controllers\PhotoController::class, 'indexFavPhotos']);
+    Route::resource('/favPhotos', \App\Http\Controllers\FavPhotoController::class);
+    Route::resource('/favUsers', \App\Http\Controllers\FavUserController::class);
+    Route::get('/getFavUsers', [\App\Http\Controllers\FavUserController::class, 'indexProfile']);
 });
 
 Route::get('/userAlbum/{uuid}', [\App\Http\Controllers\PhotoController::class, 'indexUserAlbum']);
