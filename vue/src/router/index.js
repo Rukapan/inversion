@@ -5,7 +5,6 @@ import AuthLayout from "../components/AuthLayout.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import MainView from "../views/MainView.vue";
-import Tips from "../views/Tips.vue";
 import Profile from "../views/Profile.vue";
 import PostPhoto from "../views/PostPhoto.vue";
 import Album from "../views/Album.vue";
@@ -22,11 +21,6 @@ const routes = [
     name: "MainView",
     meta: { requiresAuth: true },
     children: [
-      {
-        path: "/tips",
-        component: Tips,
-        name: "Tips",
-      },
       {
         path: `/profile`,
         component: Profile,

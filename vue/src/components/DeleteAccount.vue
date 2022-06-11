@@ -5,16 +5,12 @@
       <p>If you delete your account, all photos you have posted will be deleted.</p>
       <div class="card-actions justify-end">
         <button @click="deleteAccount" class="btn btn-outline">
-          <TrashIcon v-if="!loading" class="h-5 w-5"></TrashIcon> <svg v-else
-            class="animate-spin -ml-1 mr-3 w-3 h-3 sm:h-5 sm:w-5 text-white" xmlns="http://www.w3.org/2000/svg"
-            fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-            </path>
+          <TrashIcon v-if="!loading" class="h-5 w-5"></TrashIcon> <svg v-else class="w-5 h-5 animate-spin "
+            viewBox="0 0 24 24">
+            <path fill="currentColor" d="M12,4V2A10,10 0 0,0 2,12H4A8,8 0 0,1 12,4Z" />
           </svg> Delete
         </button>
-        <router-link :to="{ name: 'Profile' }" class="btn btn-primary">Cancel</router-link>
+        <button @click="back" class="btn btn-primary">Cancel</button>
       </div>
     </div>
   </div>
@@ -37,17 +33,22 @@ function deleteAccount() {
       error: false,
       message: "Successfully deleted your account."
     })
+    loading.value = false;
     setTimeout(() => {
       router.push({
         name: "Register"
       })
-    }, 7000);
+    }, 3000);
   }).catch((err) => {
     store.commit("setNotification", {
       error: true,
       message: "Failed to delete account."
     })
+    loading.value = false;
   });
-  loading.value = false;
+}
+
+function back() {
+  router.back();
 }
 </script>

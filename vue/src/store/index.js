@@ -8,16 +8,21 @@ const store = createStore({
       data: JSON.parse(sessionStorage.getItem("User")),
       profile: JSON.parse(sessionStorage.getItem("Profile")),
       lastPost: JSON.parse(sessionStorage.getItem("LastPost")),
-      favPhotos: new Map(JSON.parse(sessionStorage.getItem("favPhotos"))),
-      favUsers: new Map(JSON.parse(sessionStorage.getItem("favUsers"))),
+      favPhotos: new Map(JSON.parse(sessionStorage.getItem("FavPhotos"))),
+      favUsers: new Map(JSON.parse(sessionStorage.getItem("FavUsers"))),
       token: sessionStorage.getItem("TOKEN"),
     },
-    photos: [],
+    photos: new Map(),
+    keyDate: [],
     album: {},
     photo: {},
     favPhotos: {},
     favUsers: {},
     notification: [],
+    photosResetKey: 0,
+    lastPhotoId: Number,
+    lastFavPhotoId: Number,
+    lastAlbumId: Number,
   },
 
   actions: {
@@ -90,7 +95,6 @@ const store = createStore({
         .get("/getFavUsers")
         .then((res) => {
           commit("setFavUserProfiles", res.data.data);
-          console.log(res);
         })
         .catch((err) => console.log(err));
     },
@@ -99,7 +103,6 @@ const store = createStore({
         .get("/favUsers")
         .then((res) => {
           commit("setFavUsers", res.data.data);
-          console.log(res);
         })
         .catch((err) => console.log(err));
     },
@@ -108,7 +111,6 @@ const store = createStore({
         .post("/favUsers", d)
         .then((res) => {
           commit("setFavUsers", res.data.data);
-          console.log(res);
         })
         .catch((err) => console.log(err));
     },
@@ -117,7 +119,6 @@ const store = createStore({
         .delete(`/favUsers/${id}`)
         .then((res) => {
           commit("setFavUsers", res.data.data);
-          console.log(res);
         })
         .catch((err) => {
           console.log(err);
@@ -159,6 +160,8 @@ const store = createStore({
     },
     deletePhoto({ commit }, photo) {
       return axiosClient.delete(`/photo/${photo.id}`).then((res) => {
+        console.log(res.data.data);
+        commit("setLastPost", res.data.data);
         return res;
       });
     },
@@ -175,10 +178,15 @@ const store = createStore({
       });
     },
     deleteAccount({ commit }) {
-      return axiosClient.delete("/user/deleteAccount").then((res) => {
-        commit("logout");
-        return res;
-      });
+      return axiosClient
+        .delete("/user/deleteAccount")
+        .then((res) => {
+          commit("logout");
+          return res;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
 
     //CompressImage
@@ -226,6 +234,9 @@ const store = createStore({
       sessionStorage.setItem("FavPhotos", JSON.stringify(obMap));
     },
     setFavPhotoImages: (state, favPhotos) => {
+      state.lastFavPhotoId = favPhotos[favPhotos.length - 1]
+        ? favPhotos[favPhotos.length - 1].id
+        : false;
       state.favPhotos = favPhotos;
     },
     setFavUsers: (state, favUsers) => {
@@ -236,15 +247,26 @@ const store = createStore({
       }
       const obMap = Array.from(map.entries());
       state.user.favUsers = map;
-      sessionStorage.setItem("favUsers", JSON.stringify(obMap));
+      sessionStorage.setItem("FavUsers", JSON.stringify(obMap));
     },
     setFavUserProfiles: (state, favUsers) => {
       state.favUsers = favUsers;
     },
     setAllPhotos: (state, photos) => {
-      state.photos.push(photos);
+      photos.forEach((e) => {
+        state.lastPhotoId = e.id;
+        if (state.photos.get(e.date)) {
+          state.photos.get(e.date).push(e);
+        } else {
+          state.photos.set(e.date, [e]);
+          state.keyDate.push(e.date);
+        }
+      });
     },
     setUserAlbum: (state, album) => {
+      state.lastAlbumId = album[album.length - 1]
+        ? album[album.length - 1].id
+        : false;
       state.album = album;
     },
     setPhoto: (state, photo) => {
@@ -254,11 +276,21 @@ const store = createStore({
       state.notification.push(notification);
       setTimeout(() => {
         state.notification.shift();
-      }, 7000);
+      }, 4000);
+    },
+    reloadPhotos: (state) => {
+      state.photos = new Map();
+      state.keyDate = [];
+      state.photosResetKey++;
     },
     logout: (state) => {
       state.user.token = null;
       sessionStorage.removeItem("TOKEN");
+      sessionStorage.removeItem("User");
+      sessionStorage.removeItem("Profile");
+      sessionStorage.removeItem("LastPost");
+      sessionStorage.removeItem("FavPhotos");
+      sessionStorage.removeItem("FavUsers");
     },
   },
 });

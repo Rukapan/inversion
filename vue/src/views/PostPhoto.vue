@@ -1,25 +1,26 @@
 <template>
   <div
-    class="relative w-[22.5rem] h-[35rem] sm:w-[30rem] sm:h-[40rem] px-5 py-2 rounded-2xl shadow-2xl border border-white backdrop-brightness-150 backdrop-blur-3xl">
-    <router-link :to="{ name: 'MainView' }"
+    class="relative w-[22.5rem] h-[33rem] sm:w-[30rem] sm:h-[40rem] px-1 py-1 rounded-2xl shadow-2xl border border-white backdrop-brightness-150 backdrop-blur-3xl animate-fade-in-fwd">
+    <router-link :to="{name: 'MainView'}"
       class="absolute top-1 right-1 btn btn-sm btn-ghost btn-circle flex justify-center items-center">
-      <XCircleIcon class="h-7 w-7"></XCircleIcon>
+      <XIcon class="h-6 w-6 text-black/60"></XIcon>
     </router-link>
     <div class="w-full flex justify-center">
-      <p class="text-2xl sm:text-3xl">{{ today }}</p>
+      <p class="text-lg sm:text-2xl">{{ today }}</p>
     </div>
     <div class="w-full flex justify-center">
-      <p class="text-xl sm:text-2xl font-bold">{{ lastPost.is_post && !rePost ? "You can post" : "You already posted today" }}</p>
+      <p class="-mt-2 text-xl sm:text-2xl font-bold">{{ lastPost.is_post && !rePost ? "You can post" : "You already posted today" }}</p>
     </div>
     <input type="file" class="hidden" ref="inputFile" accept="image/jpeg, image/jpg, image/png"
       @change="compressImage" />
     <form v-if="lastPost.is_post || rePost" @submit="postPhoto">
-      <div class="mt-4 w-full h-[25rem] sm:h-[29rem] flex justify-center items-center">
+      <div class="mt-[2.9rem] sm:mt-4 w-full h-[20rem] sm:h-[30rem] flex justify-center items-center ">
         <button @click="changeImage"
-          class="relative w-max h-max px-0.5 py-0.5 border border-white rounded-2xl group group-hover:border-black transition duration-300">
+          class="relative w-max h-max border border-white rounded-2xl group group-hover:border-black transition duration-300 tooltip tooltip-right tooltip-info"
+          data-tip="Choose a Photo">
           <div v-if="photo.image">
             <img :src="photo.image" :class="{ 'brightness-50': loading }"
-              class="w-full max-h-[25rem] sm:max-h-[29rem] rounded-2xl group-hover:brightness-50 transition duration-300">
+              class="w-full max-h-[25rem] sm:max-h-[30rem] rounded-2xl group-hover:brightness-50 transition duration-300">
             <p
               class="invisible group-hover:animate-show absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 text-white text-xl">
               Click to Change Image</p>
@@ -34,7 +35,7 @@
             </div>
           </div>
           <div v-else
-            class="w-[25rem] h-[25rem] sm:h-[29rem] bg-white/30 rounded-2xl flex justify-center items-center group-hover:bg-black/10 transition duration-300">
+            class="w-[21rem] h-[25rem] sm:w-[28rem] sm:h-[31rem] bg-white/40 rounded-2xl flex justify-center items-center group-hover:bg-black/10 transition duration-300">
             <svg style="width:120px;height:120px" viewBox="0 0 24 24">
               <path fill="currentColor"
                 d="M13 19C13 19.7 13.13 20.37 13.35 21H5C3.9 21 3 20.11 3 19V5C3 3.9 3.9 3 5 3H19C20.11 3 21 3.9 21 5V13.35C20.37 13.13 19.7 13 19 13V5H5V19H13M13.96 12.29L11.21 15.83L9.25 13.47L6.5 17H13.35C13.75 15.88 14.47 14.91 15.4 14.21L13.96 12.29M20 18V15H18V18H15V20H18V23H20V20H23V18H20Z" />
@@ -42,13 +43,14 @@
           </div>
         </button>
       </div>
-      <div class="mt-4 flex justify-center items-center w-full">
+      <div class="mt-12 sm:mt-4 flex justify-center items-center w-full">
         <div class="form-control">
           <div class="input-group">
             <input type="text" v-model="photo.title" placeholder="Photo Title..."
               class="input input-bordered bg-white/0 border-white placeholder:text-black/80 font-bold text-lg text-center" />
             <button type="submit" :class="{ 'btn-disabled btn-outline': !postButton || loading }"
-              class="btn w-14 btn-square btn-primary text-white hover:text-white/60">
+              class="btn w-14 btn-square btn-primary text-white hover:text-white/60 tooltip tooltip-right tooltip-info flex justify-center items-center normal-case"
+              data-tip="Upload">
               <UploadIcon class="h-7 w-7"></UploadIcon>
             </button>
           </div>
@@ -57,9 +59,9 @@
     </form>
     <div v-else>
       <div class="mt-4">
-        <div class="w-full h-[25rem] sm:h-[29rem] flex justify-center items-center">
+        <div class="w-full h-[25rem] sm:h-[30rem] flex justify-center items-center">
           <button @click="changeImage"
-            class="relative group border border-white hover:border-black transition duration-300 rounded-2xl flex justify-center items-center shadow">
+            class="relative group border border-white hover:border-black transition duration-150 rounded-2xl flex justify-center items-center shadow">
             <img :src="lastPost.image"
               class="w-full max-h-[25rem] sm:max-h-[29rem] rounded-2xl group-hover:brightness-50">
             <div class="absolute invisible group-hover:animate-show">
@@ -68,15 +70,17 @@
           </button>
         </div>
       </div>
-      <div class="mt-4 w-full">
-        <p class="text-center text-3xl sm:text-4xl font-bold border-b border-primary">{{ lastPost.title }}</p>
+      <div class="mt-2 sm:mt-4 w-full">
+        <div class="flex justify-center items-center">
+          <p class="text-center text-3xl sm:text-4xl font-bold border-b border-primary px-5">{{ lastPost.title }}</p>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { XCircleIcon, UploadIcon } from '@heroicons/vue/outline';
+import { XIcon, UploadIcon } from '@heroicons/vue/outline';
 import { ref, computed, watch } from 'vue';
 import store from '../store';
 
@@ -91,6 +95,8 @@ const photo = ref({
 })
 
 let postButton = ref(false);
+
+let loading = ref(false);
 
 watch(photo.value,
   (newValue, oldValue) => {
@@ -110,6 +116,7 @@ function changeImage(ev) {
 }
 
 async function compressImage(ev) {
+  loading.value = true;
   const file = ev.target.files[0];
   const compFile = await store.dispatch("compressImage", {
     image: file,
@@ -121,11 +128,10 @@ async function compressImage(ev) {
     photo.value.image = reader.result;
     rePost.value = true;
     ev.target.value = "";
+    loading.value = false;
   };
   reader.readAsDataURL(compFile);
 }
-
-let loading = ref(false);
 
 function postPhoto(ev) {
   loading.value = true;
@@ -136,6 +142,7 @@ function postPhoto(ev) {
         error: false,
         message: "Your photo has been uploaded."
       });
+      store.commit("reloadPhotos");
       loading.value = false;
       rePost.value = false;
       photo.value.title = "";

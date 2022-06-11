@@ -26,7 +26,7 @@ class PhotoController extends Controller
      */
     public function index()
     {
-        return PhotoResource::collection(Photo::orderBy('updated_at', 'DESC')->paginate(20));
+        return PhotoResource::collection(Photo::latest('updated_at')->paginate(20));
     }
 
     /**
@@ -140,14 +140,26 @@ class PhotoController extends Controller
      */
     public function destroy(Photo $photo)
     {
+        $user = $this->request->user();
+
+        $lastPostId = LastPost::where('uuid', $user['uuid'])->value('photo_id');
+
+        if ($photo->id === $lastPostId) {
+            LastPost::where('uuid', $user['uuid'])->first()->update([
+                'photo_id' => null,
+                'image' => null,
+                'title' => null,
+                'date' => null
+            ]);
+        }
+
         $absolutePath = public_path($photo->image);
         File::delete($absolutePath);
 
         $photo->delete();
 
-        return response([
-            'success' => true
-        ]);
+        return
+            new LastPostResource(LastPost::where('uuid', $user['uuid'])->first());
     }
 
     private function saveImage($image)

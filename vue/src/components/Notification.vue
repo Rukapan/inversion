@@ -1,5 +1,5 @@
 <template>
-  <div v-for="item in notifications" class="mt-1 animate-fadeIn">
+  <div v-for="item in notifications" class="mt-1 animate-fade-in-top">
     <div v-if="item.error" @click="close" class="cursor-pointer alert alert-error shadow-lg">
       <div>
         <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none"

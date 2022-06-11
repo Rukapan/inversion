@@ -1,18 +1,19 @@
 <template>
   <div
-    class="relative w-[22.5rem] h-[30rem] py-2 px-2 rounded-2xl shadow-2xl border border-white backdrop-brightness-150 backdrop-blur-3xl">
-    <router-link :to="{ name: 'MainView' }"
+    class="relative w-[22rem] h-[28.8rem] py-2 px-2 rounded-2xl shadow-2xl border border-white backdrop-brightness-150 backdrop-blur-3xl">
+    <button @click="back"
       class="absolute top-1 right-1 btn btn-sm btn-ghost btn-circle flex justify-center items-center z-10">
-      <XCircleIcon class="h-7 w-7"></XCircleIcon>
-    </router-link>
+      <XIcon class="h-6 w-6 text-black/60"></XIcon>
+    </button>
     <div class="relative flex justify-center w-full">
       <div @click="changeImage" class="group rounded-full tooltip tooltip-right tooltip-info" data-tip="Change Icon">
         <input type="file" ref="inputFile" class="hidden" @change="compressImage">
         <img v-if="profile.image" :src="profile.image"
           class="h-[15rem] w-[15rem] rounded-full group-hover:brightness-75 border border-white group-hover:border-black cursor-pointer transition duration-300">
-          <div v-else class="flex justify-center items-center h-[15rem] w-[15rem] rounded-full group-hover:brightness-75 border border-white group-hover:border-black cursor-pointer transition duration-300">
-            <UserCircleIcon class="h-[13rem] w-[13rem] group-hover:brightness-75"></UserCircleIcon>
-          </div>
+        <div v-else
+          class="flex justify-center items-center h-[15rem] w-[15rem] rounded-full group-hover:brightness-75 border border-white group-hover:border-black cursor-pointer transition duration-300">
+          <UserCircleIcon class="h-[15rem] w-[15rem] group-hover:brightness-75"></UserCircleIcon>
+        </div>
         <svg
           class="absolute invisible group-hover:animate-show text-white cursor-pointer top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2"
           style="width:70px;height:70px" viewBox="0 0 24 24">
@@ -21,14 +22,14 @@
         </svg>
       </div>
     </div>
-    <form @submit="saveProfile" class="space-y-3 mt-5">
+    <form @submit="saveProfile" class="space-y-3 mt-3">
       <div class="flex justify-center w-full">
         <div class="relative w-[75%] h-10 tooltip tooltip-right tooltip-info" data-tip="UserName">
           <UserIcon class="absolute left-0 w-7 h-7"></UserIcon>
           <input name="name" type="text" v-model="profile.name"
-            class="w-full bg-white/0 border-b border-white outline-none text-2xl text-center placeholder:text-black"
-            :placeholder="store.state.user.profile.name" />
-          <PencilIcon class="absolute right-0 top-0.5 h-5 w-5"></PencilIcon>
+            class="w-full bg-white/0 border-b border-white outline-none text-2xl text-center placeholder:text-black/70"
+            placeholder="Name" />
+          <PencilIcon class="absolute right-0 top-1.5 h-5 w-5"></PencilIcon>
         </div>
       </div>
       <div class="flex justify-center w-full">
@@ -40,8 +41,7 @@
           </div>
           <p v-else @mouseover="hoverEl('hoverAge')" @mouseleave="leaveEl('hoverAge')"
             class="w-full text-center text-2xl border-b border-white bg-white/0 animate-fadeIn cursor-pointer">{{
-                profile.age
-            }}</p>
+            profile.age }}</p>
           <svg class="absolute right-0" style="width:24px;height:24px" viewBox="0 0 24 24">
             <path fill="currentColor"
               d="M12,18.17L8.83,15L7.42,16.41L12,21L16.59,16.41L15.17,15M12,5.83L15.17,9L16.58,7.59L12,3L7.41,7.59L8.83,9L12,5.83Z" />
@@ -58,8 +58,7 @@
           </div>
           <p v-else @mouseover="hoverEl('hoverLocation')" @mouseleave="leaveEl('hoverLocation')"
             class="w-full text-center text-2xl border-b border-white bg-white/0 animate-fadeIn cursor-pointer">{{
-                profile.location
-            }}</p>
+            profile.location }}</p>
           <svg class="absolute right-0" style="width:24px;height:24px" viewBox="0 0 24 24">
             <path fill="currentColor"
               d="M12,18.17L8.83,15L7.42,16.41L12,21L16.59,16.41L15.17,15M12,5.83L15.17,9L16.58,7.59L12,3L7.41,7.59L8.83,9L12,5.83Z" />
@@ -67,15 +66,15 @@
         </div>
       </div>
       <div class="flex justify-center w-full pt-0.5">
-        <button type="submit" class="btn btn-sm h-10 btn-primary text-white normal-case text-lg space-x-1">
+        <button type="submit" class="btn btn-sm btn-primary text-white normal-case text-lg space-x-1 tooltip tooltip-right tooltip-info" data-tip="Save">
           <SaveIcon v-if="!loading" class="w-7 h-7"></SaveIcon> <svg v-if="loading"
-            class="animate-spin -ml-1 mr-3 w-3 h-3 sm:h-5 sm:w-5 text-white" xmlns="http://www.w3.org/2000/svg"
+            class="animate-spin w-3 h-3 sm:h-5 sm:w-5 text-white" xmlns="http://www.w3.org/2000/svg"
             fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
             <path class="opacity-75" fill="currentColor"
               d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
             </path>
-          </svg> <span>Save</span>
+          </svg>
         </button>
       </div>
     </form>
@@ -83,20 +82,15 @@
 </template>
 
 <script setup>
-import { XCircleIcon, UserIcon, ClockIcon, LocationMarkerIcon, PencilIcon, SaveIcon, UserCircleIcon } from '@heroicons/vue/outline';
-import { ref } from "vue";
+import { XIcon, UserIcon, ClockIcon, LocationMarkerIcon, PencilIcon, SaveIcon, UserCircleIcon } from '@heroicons/vue/outline';
+import { computed, ref } from "vue";
 import { useRouter } from 'vue-router';
 import { VueScrollPicker } from "vue-scroll-picker"
 import store from "../store";
 
 const router = useRouter();
 
-const profile = ref({
-  image: store.state.user.profile.image,
-  name: "Name",
-  age: 1,
-  location: "JP"
-});
+const profile = computed(() => store.state.user.profile);
 
 const scrollPicker = ref({
   hovering: false,
@@ -146,6 +140,7 @@ function saveProfile(ev) {
   ev.preventDefault();
   store.dispatch("saveProfile", profile.value)
     .then(() => {
+      store.commit("reloadPhotos")
       store.commit("setNotification", {
         error: false,
         message: "Your profile has been updated."
@@ -161,6 +156,10 @@ function saveProfile(ev) {
         message: "Please try it again."
       })
     })
+}
+
+function back() {
+  router.back();
 }
 </script>
 
