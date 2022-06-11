@@ -90,7 +90,6 @@ let meta = ref({});
 let links = ref({});
 
 function getFavPhotos(url = null) {
-  showFavPhoto.value = false;
   store.dispatch("getFavPhotos", url)
     .then((res) => {
       meta.value = res.meta;
@@ -131,7 +130,6 @@ let deleteLoading = ref(false);
 function deleteFavPhoto(id) {
   deleteLoading.value = true;
   store.dispatch("deleteFavPhoto", favPhotos.value.get(id)).then(() => {
-    loading.value = true;
     store.commit("setNotification", {
       error: false,
       message: "Removed from favorites."

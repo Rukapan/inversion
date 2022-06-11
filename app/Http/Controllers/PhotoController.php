@@ -26,7 +26,7 @@ class PhotoController extends Controller
      */
     public function index()
     {
-        return PhotoResource::collection(Photo::latest('updated_at')->paginate(20));
+        return PhotoResource::collection(Photo::latest('updated_at')->paginate(16));
     }
 
     /**

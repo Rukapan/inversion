@@ -276,7 +276,7 @@ const store = createStore({
       state.notification.push(notification);
       setTimeout(() => {
         state.notification.shift();
-      }, 4000);
+      }, 5000);
     },
     reloadPhotos: (state) => {
       state.photos = new Map();

@@ -21,7 +21,7 @@
         data-tip="Favorite">
         <HeartIcon class="w-10 h-10 sm:w-14 sm:h-14"></HeartIcon>
       </label>
-      <ul tabindex="0" class="dropdown-content menu shadow bg-white/60 rounded-box w-max">
+      <ul tabindex="0" class="dropdown-content menu shadow bg-white/70 rounded-box w-max">
         <li class="tooltip tooltip-right tooltip-info" data-tip="Photos">
           <router-link :to="{ name: 'FavPhotos' }">
             <svg class="w-8 sm:w-10 h-8 sm:h-10" viewBox="0 0 24 24">
